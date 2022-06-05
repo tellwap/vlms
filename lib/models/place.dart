@@ -1,27 +1,44 @@
 import 'dart:io';
 
-class PlaceLocation {
+class Location {
   final double latitude;
   final double longitude;
-  final String? address;
 
-  const PlaceLocation({
+  const Location({
     required this.latitude,
     required this.longitude,
-    this.address,
   });
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      latitude: double.parse(json['latitude']),
+      longitude: double.parse(json['longitude']),
+    );
+  }
 }
 
 class Place {
-  final String id;
-  final String title;
-  final PlaceLocation location;
+  final int id;
+  final String name;
+  final Location location;
+  //final String latitude;
+  //final String longitude;
+  // final PlaceLocation location;
   // final File image;
 
-  Place({
-    required this.id,
-    required this.title,
-    required this.location,
-    // required this.image,
-  });
+  Place({required this.id, required this.name, required this.location
+      //required this.latitude,
+      // required this.longitude
+      // required this.location,
+      // required this.image,
+      });
+
+  factory Place.fromJson(Map<String, dynamic> json) {
+    return Place(
+        id: json['id'],
+        name: json['name'],
+        location: Location.fromJson(json['location']));
+    // latitude: json['latitude'] as String,
+    // longitude: json['longitude'] as String);
+  }
 }

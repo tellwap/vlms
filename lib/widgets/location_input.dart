@@ -63,13 +63,13 @@ class _LocationInputState extends State<LocationInput> {
       children: <Widget>[
         TextField(
           controller: _latitudeTextController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             label: Text('Latitude'),
           ),
         ),
         TextField(
           controller: _longitudeTextController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             label: Text('Longitude'),
           ),
         ),

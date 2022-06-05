@@ -9,12 +9,12 @@ class PlaceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context)?.settings.arguments as String;
+    final id = ModalRoute.of(context)?.settings.arguments as int;
     final selectedPlace =
         Provider.of<GreatPlaces>(context, listen: false).findById(id);
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedPlace.title),
+        title: Text(selectedPlace.name),
       ),
       body: Card(
         margin: const EdgeInsets.all(20),
@@ -32,7 +32,7 @@ class PlaceDetailScreen extends StatelessWidget {
                         'Name of place',
                       ),
                       Text(
-                        selectedPlace.title,
+                        selectedPlace.name,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       )
                     ],
@@ -75,7 +75,7 @@ class PlaceDetailScreen extends StatelessWidget {
                   MaterialPageRoute(
                     fullscreenDialog: true,
                     builder: (ctx) => MapScreen(
-                      initialLocation: selectedPlace.location,
+                      // initialLocation: selectedPlace.location,
                       isSelecting: false,
                     ),
                   ),
