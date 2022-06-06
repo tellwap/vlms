@@ -9,6 +9,7 @@ class LocationMapScreen extends StatefulWidget {
 
   @override
   State<LocationMapScreen> createState() => _LocationMapScreenState();
+
 }
 
 class _LocationMapScreenState extends State<LocationMapScreen> {
@@ -16,6 +17,23 @@ class _LocationMapScreenState extends State<LocationMapScreen> {
   final Set<Marker> markers = new Set(); //markers for google map
   static const LatLng showLocation =
       const LatLng(27.7089427, 85.3086209); //location to show in map
+  bool _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    print('*****************************************');
+    // TODO: implement didChangeDependencies
+    if(_isInit){
+      fetchLocationApi();
+    }
+  //  _isInit = false;
+    super.didChangeDependencies();
+  }
+  fetchLocationApi() async{
+   final response =  await Provider.of<GreatPlaces>(context).fetchAndSetPlaces();
+   print('location fetched ********** ${response.data}');
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
