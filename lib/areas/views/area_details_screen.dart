@@ -11,6 +11,7 @@ class AreaDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AreaViewModel areaViewModel = context.watch<AreaViewModel>();
+    int total = areaViewModel.selectedArea!.places?.length as int;
     return Scaffold(
       appBar: AppBar(
         title: Text('${areaViewModel.selectedArea?.name}'),
@@ -22,7 +23,7 @@ class AreaDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Name of Area'),
+                const Text('Name of Area'),
                 Text(
                   '${areaViewModel.selectedArea?.name}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -33,7 +34,7 @@ class AreaDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Code'),
+                const Text('Code'),
                 Text(
                   '${areaViewModel.selectedArea?.code}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -41,6 +42,39 @@ class AreaDetailsScreen extends StatelessWidget {
               ],
             ),
             const Divider(),
+            const SizedBox(height: 20),
+            const Text(
+              'Centers',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              height: 50.0 * total,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.amber)),
+              child: ListView.builder(
+                itemCount: areaViewModel.selectedArea!.places?.length,
+                itemBuilder: (ctx, index) => ListTile(
+                  title: Text(
+                    '${areaViewModel.selectedArea?.places![index].name}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          'Latitude ${areaViewModel.selectedArea?.places![index].location.latitude}'),
+                      Text(
+                          'Longitude ${areaViewModel.selectedArea?.places![index].location.latitude}'),
+                      const Divider(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Row(
               children: [
                 ElevatedButton(

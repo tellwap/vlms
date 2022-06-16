@@ -21,12 +21,17 @@ class Place {
   final int id;
   final String name;
   final Location location;
+  final int districtId;
   //final String latitude;
   //final String longitude;
   // final PlaceLocation location;
   // final File image;
 
-  Place({required this.id, required this.name, required this.location
+  Place(
+      {required this.id,
+      required this.name,
+      required this.location,
+      required this.districtId
       //required this.latitude,
       // required this.longitude
       // required this.location,
@@ -37,7 +42,9 @@ class Place {
     return Place(
         id: json['id'],
         name: json['name'],
+        districtId: json['district_id'],
         location: Location.fromJson(json['location']));
+
     // latitude: json['latitude'] as String,
     // longitude: json['longitude'] as String);
   }

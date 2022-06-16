@@ -20,8 +20,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final _textEditingControllerAccount = TextEditingController();
-  final _textEditingControllerPassword = TextEditingController();
+  final _textEditingControllerAccount =
+      TextEditingController(text: 'chami@epimac.tech');
+  final _textEditingControllerPassword =
+      TextEditingController(text: '@tellwap');
   final _passwordFocusNode = FocusNode();
   bool isLoading = false;
 
@@ -112,7 +114,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
-                          style: ElevatedButton.styleFrom(primary: Colors.amber),
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.amber),
                           onPressed: _loginUser,
                           child: const Text('Login')),
                   const SizedBox(height: 10),

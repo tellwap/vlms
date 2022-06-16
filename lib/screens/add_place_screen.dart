@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tvlms/areas/models/area.dart';
+import 'package:tvlms/areas/view_models/area_view_model.dart';
 
 import '../widgets/image_input.dart';
 import '../widgets/location_input.dart';
@@ -24,24 +26,43 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   //   _pickedImage = pickedImage;
   // }
 
+  Area? _selectedArea;
+  bool _isInit = false;
+
   void _selectPlace(double lat, double lng) {
     _pickedLocation = Location(latitude: lat, longitude: lng);
   }
 
   void _savePlace() {
-    if (_titleController.text.isEmpty || _pickedLocation == null) {
+    if (_titleController.text.isEmpty ||
+        _pickedLocation == null ||
+        _selectedArea == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Required filled is missing')));
       return;
     }
     Provider.of<GreatPlaces>(context, listen: false)
-        .addPlace(_titleController.text, _pickedLocation!);
+        .addPlace(_titleController.text, _pickedLocation!, _selectedArea!.id);
     Navigator.of(context).pop();
   }
 
   @override
+  void didChangeDependencies() async {
+    // if (_isInit) {
+    //   return;
+    // }
+    // await Provider.of<AreaViewModel>(context, listen: false).getAreas();
+    // _isInit = true;
+    print('initiated.......');
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final _areas = Provider.of<AreaViewModel>(context, listen: false).items;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add a New Place'),
+        title: const Text('Add a New Place'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,14 +70,38 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     TextField(
-                      decoration: InputDecoration(labelText: 'Name'),
+                      decoration: const InputDecoration(labelText: 'Name'),
                       controller: _titleController,
                     ),
-                    SizedBox(
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    DropdownButtonFormField<Area>(
+                      decoration:
+                          const InputDecoration(label: Text('District')),
+                      value: _selectedArea,
+                      items: _areas
+                          .map(
+                            (district) => DropdownMenuItem<Area>(
+                              value: district,
+                              child: Text(district.name),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (selectedArea) {
+                        setState(() {
+                          _selectedArea = selectedArea;
+                          //  _selectedUnitId = selectedUnit.id;
+                        });
+                      },
+                      validator: (val) =>
+                          val == null ? 'Unit is  is required' : null,
+                    ),
+                    const SizedBox(
                       height: 10,
                     ),
                     LocationInput(_selectPlace),

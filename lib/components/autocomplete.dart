@@ -62,22 +62,25 @@ class AutocompleteBasicUserExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Autocomplete<Area>(
-      displayStringForOption: _displayStringForOption,
-      optionsBuilder: (TextEditingValue textEditingValue) {
-        if (textEditingValue.text == '') {
-          return const Iterable<Area>.empty();
-        }
-        return _areaOptions.where((Area option) {
-          return option.name
-              .toString()
-              .contains(textEditingValue.text.toLowerCase());
-        });
-      },
-      onSelected: (Area selection) {
-        Provider.of<GreatPlaces>(context, listen: false).filteredItems(1);
-        debugPrint('You just selected ${_displayStringForOption(selection)}');
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Autocomplete<Area>(
+        displayStringForOption: _displayStringForOption,
+        optionsBuilder: (TextEditingValue textEditingValue) {
+          if (textEditingValue.text == '') {
+            return const Iterable<Area>.empty();
+          }
+          return _areaOptions.where((Area option) {
+            return option.name
+                .toString()
+                .contains(textEditingValue.text.toLowerCase());
+          });
+        },
+        onSelected: (Area selection) {
+          Provider.of<GreatPlaces>(context, listen: false).filteredItems(1);
+          debugPrint('You just selected ${_displayStringForOption(selection)}');
+        },
+      ),
     );
   }
 }

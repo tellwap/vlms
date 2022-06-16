@@ -25,6 +25,7 @@ class AreaServices {
     } on FormatException {
       return Failure(code: 103, errorResponse: 'Invalid format');
     } catch (e) {
+      print(e);
       return Failure(code: 104, errorResponse: 'Unknown error');
     }
   }

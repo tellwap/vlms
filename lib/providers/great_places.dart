@@ -46,10 +46,9 @@ class GreatPlaces with ChangeNotifier {
         uri,
         headers: headers,
       );
+      print(response.body);
 
       if (response.statusCode == 200) {
-        print(response.body);
-
         _apiResponse.data = jsonDecode(response.body)
             .map((place) => Place.fromJson(place))
             .toList();
@@ -72,6 +71,7 @@ class GreatPlaces with ChangeNotifier {
     String pickedTitle,
     // File pickedImage,
     Location location,
+    int districtId,
   ) async {
     ApiResponse _apiResponse = ApiResponse();
     try {
@@ -84,7 +84,7 @@ class GreatPlaces with ChangeNotifier {
       final response = await http.post(uri,
           body: jsonEncode({
             // 'user':13,
-            'district_id': '1',
+            'district_id': districtId,
             'name': pickedTitle,
             'latitude': location.latitude,
             'longitude': location.longitude

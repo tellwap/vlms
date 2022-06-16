@@ -13,6 +13,8 @@ import 'package:tvlms/screens/auth/login_screen.dart';
 import 'package:tvlms/screens/auth/register_screen.dart';
 import 'package:tvlms/screens/bottom_navigation_screen.dart';
 import 'package:tvlms/screens/dashboard_screen.dart';
+import 'package:tvlms/screens/map_search_screen.dart';
+import 'package:tvlms/screens/map_test_screen.dart';
 import 'package:tvlms/screens/place_detail_screen.dart';
 import 'package:tvlms/screens/places_list_screen.dart';
 import 'package:tvlms/screens/splash_screen.dart';
@@ -80,6 +82,8 @@ class MyApp extends StatelessWidget {
               AddAreaScreen.routeName: (ctx) => const AddAreaScreen(),
               EditAreaScreen.routeName: (ctx) => const EditAreaScreen(),
               AreaDetailsScreen.routeName: (ctx) => const AreaDetailsScreen(),
+              MapTestScreen.routeName: (ctx) => const MapTestScreen(),
+              //  MapSearchScreen.routeName: (ctx) => const MapSearchScreen(),
             }),
       ),
     );

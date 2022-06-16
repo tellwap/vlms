@@ -1,25 +1,27 @@
+import 'package:flutter/widgets.dart';
+import 'package:tvlms/models/place.dart';
+
 class Area {
   final int id;
   final String name;
   final String code;
+  List<Place>? places;
 
-  Area({required this.id, required this.name, required this.code});
+  Area({
+    required this.id,
+    required this.name,
+    required this.code,
+    this.places,
+  });
+
   factory Area.fromJson(Map<String, dynamic> json) {
-    return Area(id: json['id'], name: json['name'], code: json['code']);
+    var list = json['centers'] as List;
+    var centerList =
+        list.map((orderItem) => Place.fromJson(orderItem)).toList();
+    return Area(
+        id: json['id'],
+        name: json['name'],
+        code: json['code'],
+        places: centerList);
   }
-  @override
-  String toString() {
-    return super.toString();
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is Area && other.name == name && other.code == code;
-  }
-
-  @override
-  int get hashCode => Object.hash(name, code);
 }
